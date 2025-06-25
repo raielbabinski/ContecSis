@@ -1,6 +1,6 @@
 # Alterações Banco de Dados
 
-Contem a explicação das alterações feitas nos documentos e artefatos da diciplina Banco de Dados. ;)
+Contem a explicação das alterações feitas nos documentos e artefatos da diciplina Banco de Dados.
 
 
 ## Requisitos
@@ -66,3 +66,6 @@ Novo Modelo Conceitual
 
 ## Modelo lógico
 
+![Modelo lógico](./Modelo_logico.png)
+
+OBS: Professor você tem acesso ao repositorio, se quiser comentar diretamente no markdown fique a vontade =)
