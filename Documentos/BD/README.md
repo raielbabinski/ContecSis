@@ -68,4 +68,4 @@ Novo Modelo Conceitual
 
 ![Modelo lógico](./Modelo_logico.png)
 
-OBS: Professor você tem acesso ao repositorio, se quiser comentar diretamente no markdown fique a vontade =)
+OBS: Professor você tem acesso ao repositório, se quiser comentar diretamente no markdown fique a vontade =)
