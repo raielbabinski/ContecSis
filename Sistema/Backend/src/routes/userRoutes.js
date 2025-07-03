@@ -1,21 +1,33 @@
-
-
 import express from 'express';
-import { getAllUsers } from '../controllers/userController.js';
+import {createUser, getAllUsers} from '../controllers/userController.js';
+
 
 const router = express.Router();
 
-// Define as rotas para o recurso "tarefas"
-// Ex: http://localhost:3001/api/tarefas
+// router.post(
+// 	"/login",
+// 	passport.authenticate("local", { session: false }),
+// 	(req, res) => {
 
-// GET /api/tarefas -> Rota para buscar todas as tarefas
-router.get('/getall', getAllUsers);
+// 		// Cria o token JWT
+// 		const token = jwt.sign({ username: req.body.username }, "your-secret-key", {
+// 			expiresIn: "1h",
+// 		});
 
-// POST /api/tarefas -> Rota para criar uma nova tarefa
+// 		res.json({ message: "Login successful", token: token });
+// 	},
+// );
+
+
+router.post('/create', createUser);
+
+// GET /users/getall -> Rota para buscar todos os usuários
+router.get('/getall' , getAllUsers);
 
 // Aqui você adicionaria outras rotas, como:
-// router.get('/tarefas/:id', getTarefaById);
-// router.put('/tarefas/:id', updateTarefa);
-// router.delete('/tarefas/:id', deleteTarefa);
+// router.get('/:id', getUserById);
+// router.post('/', createUser);
+// router.put('/:id', updateUser);
+// router.delete('/:id', deleteUser);
 
 export default router;
