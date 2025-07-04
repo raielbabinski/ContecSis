@@ -1,22 +1,10 @@
 import express from 'express';
-import {createUser, getAllUsers} from '../controllers/userController.js';
-
+import {createUser, getAllUsers, login} from '../controllers/userController.js';
+import passport from '../config/passport.js';
 
 const router = express.Router();
 
-// router.post(
-// 	"/login",
-// 	passport.authenticate("local", { session: false }),
-// 	(req, res) => {
-
-// 		// Cria o token JWT
-// 		const token = jwt.sign({ username: req.body.username }, "your-secret-key", {
-// 			expiresIn: "1h",
-// 		});
-
-// 		res.json({ message: "Login successful", token: token });
-// 	},
-// );
+router.post('/login', login);
 
 
 router.post('/create', createUser);

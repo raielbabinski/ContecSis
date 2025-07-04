@@ -3,13 +3,16 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import bcrypt from 'bcrypt';
 import db from './database.js';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 // Estratégia Local
 passport.use(
     new LocalStrategy(
         {
-            usernameField: "username",
-            passwordField: "password",
+            usernameField: process.env.PASSPORT_USERNAME_FIELD || "username",
+            passwordField: process.env.PASSPORT_PASSWORD_FIELD || "password",
         },
         async (username, password, done) => {
             try {
@@ -24,10 +27,12 @@ passport.use(
                     return done(null, false, { message: "Usuário incorreto." });
                 }
 
+                console.log("Usuário encontrado:", user);
+
                 // verifica se o hash da senha bate com a senha informada
                 const passwordMatch = await bcrypt.compare(
                     password,
-                    user.user_password,
+                    user.senha,
                 );
 
                 // se senha está ok, retorna o objeto usuário
@@ -49,7 +54,7 @@ passport.use(
     new JwtStrategy(
         {
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-            secretOrKey: "your-secret-key",
+            secretOrKey: process.env.JWT_SECRET,
         },
         async (payload, done) => {
             try {
