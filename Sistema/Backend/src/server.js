@@ -12,9 +12,7 @@ import dotenv from 'dotenv';
 import userRoutes from './routes/userRoutes.js';
 import clientRoutes from './routes/clientRoutes.js';
 import installerRoutes from './routes/installerRoutes.js';
-// Importe outras rotas conforme necessário
-// import pedidosRoutes from './routes/pedidosRoutes.js';
-// import clientesRoutes from './routes/clientesRoutes.js';
+import serviceRoutes from './routes/serviceRoutes.js';
 
 const app = express();
 const PORT = 3002; // A porta onde a API vai rodar
@@ -29,6 +27,7 @@ app.use('/cliente', clientRoutes);
 
 app.use('/instalador', installerRoutes);
 
+app.use('/servico', serviceRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor rodando com sucesso em http://localhost:${PORT}`);

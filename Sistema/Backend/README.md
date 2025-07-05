@@ -57,10 +57,17 @@ Preencha as seções de **Clientes**, **Pedidos** e **Serviços** conforme for i
     - [Buscar Cliente por CPF](#buscar-cliente-por-cpf)
     - [Atualizar Cliente](#atualizar-cliente)
     - [Deletar Cliente](#deletar-cliente)
+    - [Listar Todos os Clientes](#listar-todos-os-clientes)
   - [Pedidos](#pedidos)
     - [Criar Pedido](#criar-pedido)
   - [Serviços](#serviços)
     - [Criar Serviço](#criar-serviço)
+  - [Instaladores](#instaladores)
+    - [Criar Instalador](#criar-instalador)
+    - [Listar Todos os Instaladores](#listar-todos-os-instaladores)
+    - [Buscar Instalador por CPF](#buscar-instalador-por-cpf)
+    - [Atualizar Instalador](#atualizar-instalador)
+    - [Deletar Instalador](#deletar-instalador)
   - [Autenticação](#autenticação)
   - [Erros Comuns](#erros-comuns)
 
@@ -291,6 +298,32 @@ Preencha as seções de **Clientes**, **Pedidos** e **Serviços** conforme for i
 
 ---
 
+### Listar Todos os Clientes
+
+- **Endpoint:** `GET /cliente/getall`
+- **Headers:**
+  ```
+  Authorization: Bearer <seu_token_jwt>
+  ```
+- **Resposta de sucesso:**
+  ```json
+  [
+    {
+      "cpf": "12345678900",
+      "nome": "Cliente Exemplo",
+      "fone": "11999999999",
+      "emai": "cliente@email.com",
+      "enderCli": 1
+    },
+    ...
+  ]
+  ```
+- **Possíveis erros:**
+  - 401: Token ausente ou inválido.
+  - 500: Erro ao buscar clientes.
+
+---
+
 ## Pedidos
 
 > **Preencha aqui quando implementar as rotas de pedidos.**
@@ -318,26 +351,304 @@ Preencha as seções de **Clientes**, **Pedidos** e **Serviços** conforme for i
 
 ## Serviços
 
-> **Preencha aqui quando implementar as rotas de serviços.**
-
 ### Criar Serviço
 
-- **Endpoint:** `POST /servicos/create`
+- **Endpoint:** `POST /servico/create`
+- **Headers:**
+  ```
+  Authorization: Bearer <seu_token_jwt>
+  Content-Type: application/json
+  ```
 - **Body (JSON):**
   ```json
   {
-    "nome": "Instalação",
-    "preco": 100.0
+    "inst": "12345678901",
+    "valserv": 350.00,
+    "tipserv": "Climatização",
+    "dtserv": "2024-07-05"
+  }
+  ```
+  - `inst`: CPF do instalador responsável pelo serviço (string, obrigatório)
+  - `valserv`: Valor do serviço (number, obrigatório)
+  - `tipserv`: Tipo do serviço (string, obrigatório)
+  - `dtserv`: Data do serviço (string, formato `YYYY-MM-DD`, obrigatório)
+
+- **Resposta de sucesso:**
+  ```json
+  {
+    "codserv": 1,
+    "inst": "12345678901",
+    "valserv": 350.00,
+    "tipserv": "Climatização",
+    "dtserv": "2024-07-05"
+  }
+  ```
+- **Possíveis erros:**
+  - 401: Token ausente ou inválido.
+  - 400: Dados obrigatórios ausentes ou inválidos.
+  - 500: Erro ao inserir serviço.
+
+---
+
+### Listar Todos os Serviços
+
+- **Endpoint:** `GET /servico/getall`
+- **Headers:**
+  ```
+  Authorization: Bearer <seu_token_jwt>
+  ```
+- **Resposta de sucesso:**
+  ```json
+  [
+    {
+      "codserv": 1,
+      "inst": "12345678901",
+      "valserv": 350.00,
+      "tipserv": "Climatização",
+      "dtserv": "2024-07-05"
+    },
+    ...
+  ]
+  ```
+- **Possíveis erros:**
+  - 401: Token ausente ou inválido.
+  - 500: Erro ao buscar serviços.
+
+---
+
+### Buscar Serviço por Código
+
+- **Endpoint:** `GET /servico/get/:codserv`
+- **Headers:**
+  ```
+  Authorization: Bearer <seu_token_jwt>
+  ```
+- **Resposta de sucesso:**
+  ```json
+  {
+    "codserv": 1,
+    "inst": "12345678901",
+    "valserv": 350.00,
+    "tipserv": "Climatização",
+    "dtserv": "2024-07-05"
+  }
+  ```
+- **Possíveis erros:**
+  - 401: Token ausente ou inválido.
+  - 404: Serviço não encontrado.
+  - 500: Erro ao buscar serviço.
+
+---
+
+### Atualizar Serviço
+
+- **Endpoint:** `PUT /servico/update/:codserv`
+- **Headers:**
+  ```
+  Authorization: Bearer <seu_token_jwt>
+  Content-Type: application/json
+  ```
+- **Body (JSON):**  
+  Envie apenas os campos que deseja atualizar.
+
+  **Exemplo:**
+  ```json
+  {
+    "valserv": 400.00,
+    "tipserv": "Manutenção",
+    "dtserv": "2024-07-10"
+  }
+  ```
+
+- **Resposta de sucesso:**
+  ```json
+  {
+    "codserv": 1,
+    "inst": "12345678901",
+    "valserv": 400.00,
+    "tipserv": "Manutenção",
+    "dtserv": "2024-07-10"
+  }
+  ```
+- **Possíveis erros:**
+  - 401: Token ausente ou inválido.
+  - 400: Nenhum campo para atualizar.
+  - 404: Serviço não encontrado.
+  - 500: Erro ao atualizar serviço.
+
+---
+
+### Deletar Serviço
+
+- **Endpoint:** `DELETE /servico/delete/:codserv`
+- **Headers:**
+  ```
+  Authorization: Bearer <seu_token_jwt>
+  ```
+- **Resposta de sucesso:**
+  ```json
+  {
+    "codserv": 1,
+    "inst": "12345678901",
+    "valserv": 350.00,
+    "tipserv": "Climatização",
+    "dtserv": "2024-07-05"
+  }
+  ```
+- **Possíveis erros:**
+  - 401: Token ausente ou inválido.
+  - 404: Serviço não encontrado.
+  - 500: Erro ao deletar serviço.
+
+---
+
+## Instaladores
+
+### Criar Instalador
+
+- **Endpoint:** `POST /instalador/create`
+- **Headers:**
+  ```
+  Authorization: Bearer <seu_token_jwt>
+  Content-Type: application/json
+  ```
+- **Body (JSON):**
+  ```json
+  {
+    "cpf": "12345678901",
+    "fone": "11999998888",
+    "email": "instalador@email.com",
+    "nome": "Carlos Instalador",
+    "habilit": "Elétrica"
   }
   ```
 - **Resposta de sucesso:**
   ```json
   {
-    "id": 1,
-    "nome": "Instalação",
-    "preco": 100.0
+    "cpf": "12345678901",
+    "fone": "11999998888",
+    "email": "instalador@email.com",
+    "nome": "Carlos Instalador",
+    "habilit": "Elétrica"
   }
   ```
+- **Possíveis erros:**
+  - 401: Token ausente ou inválido.
+  - 400: Dados obrigatórios ausentes ou inválidos.
+  - 500: Erro ao inserir instalador.
+
+---
+
+### Listar Todos os Instaladores
+
+- **Endpoint:** `GET /instalador/getall`
+- **Headers:**
+  ```
+  Authorization: Bearer <seu_token_jwt>
+  ```
+- **Resposta de sucesso:**
+  ```json
+  [
+    {
+      "cpf": "12345678901",
+      "fone": "11999998888",
+      "email": "instalador@email.com",
+      "nome": "Carlos Instalador",
+      "habilit": "Elétrica"
+    },
+    ...
+  ]
+  ```
+- **Possíveis erros:**
+  - 401: Token ausente ou inválido.
+  - 500: Erro ao buscar instaladores.
+
+---
+
+### Buscar Instalador por CPF
+
+- **Endpoint:** `GET /instalador/get/:cpf`
+- **Headers:**
+  ```
+  Authorization: Bearer <seu_token_jwt>
+  ```
+- **Resposta de sucesso:**
+  ```json
+  {
+    "cpf": "12345678901",
+    "fone": "11999998888",
+    "email": "instalador@email.com",
+    "nome": "Carlos Instalador",
+    "habilit": "Elétrica"
+  }
+  ```
+- **Possíveis erros:**
+  - 401: Token ausente ou inválido.
+  - 404: Instalador não encontrado.
+  - 500: Erro ao buscar instalador.
+
+---
+
+### Atualizar Instalador
+
+- **Endpoint:** `PUT /instalador/update/:cpf`
+- **Headers:**
+  ```
+  Authorization: Bearer <seu_token_jwt>
+  Content-Type: application/json
+  ```
+- **Body (JSON):**  
+  Envie apenas os campos que deseja atualizar.
+
+  **Exemplo:**
+  ```json
+  {
+    "nome": "Novo Nome Instalador",
+    "fone": "11988887777",
+    "email": "novoemail@exemplo.com",
+    "habilit": "Hidráulica"
+  }
+  ```
+
+- **Resposta de sucesso:**
+  ```json
+  {
+    "cpf": "12345678901",
+    "fone": "11988887777",
+    "email": "novoemail@exemplo.com",
+    "nome": "Novo Nome Instalador",
+    "habilit": "Hidráulica"
+  }
+  ```
+- **Possíveis erros:**
+  - 401: Token ausente ou inválido.
+  - 400: Nenhum campo para atualizar.
+  - 404: Instalador não encontrado.
+  - 500: Erro ao atualizar instalador.
+
+---
+
+### Deletar Instalador
+
+- **Endpoint:** `DELETE /instalador/delete/:cpf`
+- **Headers:**
+  ```
+  Authorization: Bearer <seu_token_jwt>
+  ```
+- **Resposta de sucesso:**
+  ```json
+  {
+    "cpf": "12345678901",
+    "fone": "11999998888",
+    "email": "instalador@email.com",
+    "nome": "Carlos Instalador",
+    "habilit": "Elétrica"
+  }
+  ```
+- **Possíveis erros:**
+  - 401: Token ausente ou inválido.
+  - 404: Instalador não encontrado.
+  - 500: Erro ao deletar instalador.
 
 ---
 
