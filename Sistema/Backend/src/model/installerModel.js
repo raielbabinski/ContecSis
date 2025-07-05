@@ -4,11 +4,11 @@ import db from '../config/database.js';
 // Função para inserir um novo instalador no banco de dados
 const insertInstaller = async (installer) => {
   try {
-    const { nome, email, telefone, cargo } = installer;
+    const {cpf, nome, email, fone, habilit } = installer;
     console.log('Inserindo instalador:', installer);
     const result = await db.query(
-      'INSERT INTO instalador (nome, email, telefone, cargo) VALUES ($1, $2, $3, $4) RETURNING *',
-      [nome, email, telefone, cargo]
+      'INSERT INTO instalador (cpf, nome, email, fone, habilit) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+      [cpf, nome, email, fone, habilit]
     );
     return result[0];
   } catch (error) {
@@ -34,7 +34,7 @@ const getAllInstallers = async () => {
 }
 
 // Função para atualizar instalador dinamicamente
-const updateInstaller = async (id, updates) => {
+const updateInstaller = async (cpf, updates) => {
   const fields = Object.keys(updates);
   const values = Object.values(updates);
 
@@ -43,10 +43,10 @@ const updateInstaller = async (id, updates) => {
   }
 
   const setString = fields.map((field, idx) => `${field} = $${idx + 1}`).join(', ');
-  const query = `UPDATE instalador SET ${setString} WHERE id = $${fields.length + 1} RETURNING *`;
+  const query = `UPDATE instalador SET ${setString} WHERE cpf = $${fields.length + 1} RETURNING *`;
 
   try {
-    const result = await db.query(query, [...values, id]);
+    const result = await db.query(query, [...values, cpf]);
     return result[0];
   } catch (error) {
     console.error('Erro ao atualizar instalador:', error.message);
@@ -75,3 +75,11 @@ const deleteInstaller = async (cpf) => {
     throw error;
   }
 }
+
+export default {
+  insertInstaller,
+  getAllInstallers,
+  updateInstaller,
+  getInstallerByCpf,
+  deleteInstaller
+};
