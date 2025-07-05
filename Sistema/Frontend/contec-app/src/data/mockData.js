@@ -322,11 +322,9 @@ export const mockBarData = [
   {
     Serviços: "Janeiro",
     "Seccionados": 137,
-    "SeccionadosColor": "hsl(229, 70%, 50%)",
     Enrolar: 96,
-    EnrolarColor: 'rgb(117, 87, 10)',
     Manutenções: 72,
-    ManutençõesColor: "hsl(97, 70%, 50%)",
+   
   },
   {
     Serviços: "Fevereiro",
@@ -335,7 +333,6 @@ export const mockBarData = [
     Enrolar: 28,
     EnrolarColor: "hsl(111, 70%, 50%)",
     Manutenções: 58,
-    ManutençõesColor: "hsl(273, 70%, 50%)",
   },
   {
     Serviços: "Março",

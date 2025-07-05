@@ -3,7 +3,7 @@ import userModel from '../model/userModel.js';
 import passport, { requireJWTAuth } from '../config/passport.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-
+import dotenv from 'dotenv';
 
 // Função para buscar todas as tarefas (GET)
 export const getAllUsers = async (req, res) => {
@@ -26,7 +26,7 @@ export const login = (req, res, next) => {
     // Gera o token JWT
     const token = jwt.sign(
       { username: user.nome }, // payload
-      'your-secret-key',       // mesmo segredo da sua estratégia JWT
+      process.env.JWT_SECRET,       // mesmo segredo da sua estratégia JWT
       { expiresIn: '1h' }
     );
     // Retorna o token para o front
