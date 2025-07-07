@@ -3,11 +3,10 @@ import db from '../config/database.js';
 // Função para cadastrar um novo seviço no banco de dados
 const insertService = async (service) => {
   try {
-    const { inst, valserv, tipserv, dtserv } = service;
-    console.log('Inserindo serviço:', service);
+    const { inst, valserv, tipserv, dtserv, codped } = service;
     const result = await db.query(
-      'INSERT INTO servico (inst, valserv, tipserv, dtserv) VALUES ($1, $2, $3, $4) RETURNING *',
-      [ inst, valserv, tipserv, dtserv ]
+      'INSERT INTO servico (inst, valserv, tipserv, dtserv, codped) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+      [ inst, valserv, tipserv, dtserv, codped ]
     );
     return result[0];
   } catch (error) {

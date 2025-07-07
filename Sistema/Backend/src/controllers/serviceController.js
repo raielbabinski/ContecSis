@@ -1,10 +1,20 @@
 import serviceModel from "../model/serviceModel.js";
+import orderModel from "../model/orderModel.js";
+
 
 // Função para inserir um novo serviço
 export const createService = async (req, res) => {
   try {
     const service = req.body;
-    console.log('Criando serviço:', service);
+    const { codped } = service;
+
+    // Verifica se o pedido existe antes de inserir o serviço
+    const order = await orderModel.getOrderById(codped);
+    if (order.error = 'Pedido não encontrado.') {
+      return res.status(404).json({ message: 'Pedido (codped) não encontrado.' });
+    }
+    console.log('Inserindo serviço:', order);
+   
     const newService = await serviceModel.insertService(service);
     res.status(201).json(newService);
   } catch (error) {
