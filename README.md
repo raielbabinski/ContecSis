@@ -2,38 +2,41 @@
 
 Sistema de Gestão de Clientes, Pedidos, Serviços, Instaladores, Peças e Usuários
 
+-  Universidade Federal da Fronteira Sul (UFFS)
+-  Ciência da Computação
+- Alunos: 
+  - Raiel Vitor Babinski 
+  - Victor Neymar de Conto
+
+
+
 ## Sumário
 - [ContecSis](#contecsis)
   - [Sumário](#sumário)
   - [Sobre o Projeto](#sobre-o-projeto)
-  - [Funcionalidades](#funcionalidades)
-  - [Tecnologias Utilizadas](#tecnologias-utilizadas)
-    - [Backend](#backend)
-  - [Como Rodar Backend](#como-rodar-backend)
   - [Estrutura de Pastas](#estrutura-de-pastas)
-  - [Documentação da API](#documentação-da-api)
-    - [Principais Endpoints](#principais-endpoints)
-  - [Exemplos de Requisições](#exemplos-de-requisições)
-    - [Login](#login)
-    - [Cadastro de Cliente](#cadastro-de-cliente)
-  - [Contato](#contato)
+  - [Frontend](#frontend)
+  - [Backend](#backend)
+    - [Como Rodar Backend](#como-rodar-backend)
+    - [Documentação da API](#documentação-da-api)
+
 
 ---
 
 ## Sobre o Projeto
-O ContecSis é um sistema backend desenvolvido em Node.js/Express com PostgreSQL para gerenciar clientes, pedidos, serviços, instaladores, peças e usuários. O objetivo é fornecer uma API robusta, segura e bem documentada para facilitar a gestão e integração com sistemas frontend.
 
-## Funcionalidades
-- Cadastro, consulta, atualização e remoção de clientes, endereços, instaladores, serviços, peças e usuários
-- Autenticação JWT (login seguro, geração e verificação de token)
-- Atualização dinâmica e incremental de entidades
-- Sincronização de itens de pedido sem perda de dados
-- Busca por CPF, atualização de endereço, verificação de existência de pedidos
-- Tratamento de erros detalhado e mensagens personalizadas
+O ContecSis é um sistema para gestão da empresa Contec do segmento de portões automáticos, assistência técnica e serviços relacionados. O objetivo é por a prova os conhecimentos dos CCRs de Programação II, Banco de dados e Engenharia de Software.
 
-## Tecnologias Utilizadas
+## Estrutura de Pastas
+```
+ ...
+```
 
-### Backend
+## Frontend
+
+
+
+## Backend
 - Node.js
 - Express
 - PostgreSQL
@@ -43,7 +46,7 @@ O ContecSis é um sistema backend desenvolvido em Node.js/Express com PostgreSQL
 - cors
 - passport
 
-## Como Rodar Backend
+### Como Rodar Backend
 1. Clone o repositório:
    ```bash
    git clone https://github.com/seu-usuario/ContecSis.git
@@ -63,78 +66,25 @@ O ContecSis é um sistema backend desenvolvido em Node.js/Express com PostgreSQL
    JWT_SECRET=sua_chave_secreta
    PORT=3000
    ```
-4. Inicie o servidor:
+
+4. Faça o insert das tabelas no seu banco de dados PostgreSQL conforme os scripts em `Sistema/Database/estrutura.sql`:
+    ```bash
+    psql -U seu_usuario -d seubanco -f estrutura.sql
+    ```
+
+5. Popule o banco de dados com dados de exemplo usando `Sistema/Database/dados.sql`:
+   ```bash
+   psql -U seu_usuario -d seubanco -f dados.sql
+   ```
+
+6. Inicie o servidor:
    ```bash
    npm start
    ```
 
-## Estrutura de Pastas
-```
-Sistema/
-  Backend/
-    src/
-      server.js
-      config/
-      controllers/
-      model/
-      routes/
-    package.json
-  Frontend/
-    contec-app/
-    imagens-contec/
-    server/
-Documentos/
-  Requisitos_Usuário.pdf.pdf
-  BD/
-```
+> Os scripts `estrutura.sql` e `dados.sql` estão em `Sistema/Database/` e já trazem toda a estrutura e dados de exemplo para testes e desenvolvimento.
 
-## Documentação da API
+
+### Documentação da API
 A documentação completa dos endpoints, exemplos de requisições e respostas, bodies esperados e erros comuns está disponível em `Sistema/Backend/README.md`.
 
-### Principais Endpoints
-- `/api/users` — Usuários
-- `/api/clients` — Clientes
-- `/api/installers` — Instaladores
-- `/api/services` — Serviços
-- `/api/parts` — Peças
-- `/api/orders` — Pedidos
-- `/api/addresses` — Endereços
-
-
-## Exemplos de Requisições
-### Login
-```json
-POST /api/auth/login
-{
-  "username": "admin",
-  "password": "123456"
-}
-```
-
-### Cadastro de Cliente
-```json
-POST /api/clients
-{
-  "nome": "João Silva",
-  "cpf": "123.456.789-00",
-  "email": "joao@email.com",
-  "telefone": "(11) 99999-9999",
-  "endereco": {
-    "rua": "Rua A",
-    "numero": "100",
-    "bairro": "Centro",
-    "cidade": "São Paulo",
-    "estado": "SP",
-    "cep": "01000-000"
-  }
-}
-```
-
-## Contato
-- Responsável: Raiel
-- Email: raiel@email.com
-- LinkedIn: [Seu LinkedIn](https://www.linkedin.com/in/seu-linkedin)
-
----
-
-> Para mais detalhes técnicos, consulte o README do backend em `Sistema/Backend/README.md`.
