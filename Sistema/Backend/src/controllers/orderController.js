@@ -1,6 +1,5 @@
 import orderModel from "../model/orderModel.js";
 import addressModel from "../model/addressModel.js";
-import orderItemModel from "../model/orderItemModel.js";
 
 /* * Controlador para gerenciar pedidos
 {
@@ -48,16 +47,6 @@ export const createOrder = async (req, res) => {
     };
 
     const newOrder = await orderModel.insertOrder(order);
-
-    for (const item of pecas) {
-      const orderItem = {
-        codped: newOrder.codped, // Código do pedido recém-criado
-        codpeca: item.id, // ID da peça
-        quantidade: item.quantidade, // Quantidade da peça
-      };
-      await orderItemModel.insertOrderItem(orderItem);
-    }
-
     res.status(201).json(newOrder);
   } catch (error) {
     console.error('Erro ao inserir pedido:', error.message);
@@ -149,40 +138,6 @@ export const updateOrder = async (req, res) => {
         return res.status(404).json({ error: updatedAddress.error });
       }
       updates.enderped = updatedAddress.endercod;
-    }
-
-    // Atualizar peças do pedido de forma incremental
-    if (updates.peca && Array.isArray(updates.peca)) {
-      // Busca peças já existentes no pedido
-      const existingItems = await orderItemModel.getOrderItemsByOrder(codped);
-      if (existingItems.error) {
-        return res.status(404).json({ error: existingItems.error });
-      }
-
-      console.log(existingItems, "\n", updates.peca)
-
-      // Atualiza quantidade das peças que já existem
-        for (const item of updates.peca) {
-            const existingItem = existingItems.find(i => i.peca === item.id.toString());
-            
-            if (existingItem) {
-            await orderItemModel.updateOrderItemQuantity(codped, item.id, item.quantidade);
-            } else {
-
-            const newOrderItem = {
-                pedido: codped,
-                peca: item.id,
-                quantidade: item.quantidade,
-            };
-            await orderItemModel.insertOrderItem(newOrderItem);
-            }
-        }
-    }
-    // Retira peca do update
-    delete updates.peca;
-    const updatedOrder = await orderModel.updateOrder(codped, updates);
-    if (updatedOrder.error) {
-      return res.status(404).json({ error: updatedOrder.error });
     }
 
     // deleta o endereço antigo se ele foi atualizado
