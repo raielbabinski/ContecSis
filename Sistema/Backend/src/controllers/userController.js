@@ -27,7 +27,7 @@ export const login = (req, res, next) => {
     const token = jwt.sign(
       { username: user.nome }, // payload
       process.env.JWT_SECRET,       // mesmo segredo da sua estratégia JWT
-      { expiresIn: '1h' }
+      { expiresIn: '20h' }
     );
     // Retorna o token para o front
     return res.json({ token, user: { nome: user.nome } });

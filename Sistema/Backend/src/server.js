@@ -13,6 +13,8 @@ import userRoutes from './routes/userRoutes.js';
 import clientRoutes from './routes/clientRoutes.js';
 import installerRoutes from './routes/installerRoutes.js';
 import serviceRoutes from './routes/serviceRoutes.js';
+import partRoutes from './routes/partRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
 
 const app = express();
 const PORT = 3002; // A porta onde a API vai rodar
@@ -28,6 +30,10 @@ app.use('/cliente', clientRoutes);
 app.use('/instalador', installerRoutes);
 
 app.use('/servico', serviceRoutes);
+
+app.use('/peca', partRoutes);
+
+app.use('/pedido', orderRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor rodando com sucesso em http://localhost:${PORT}`);

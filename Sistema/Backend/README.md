@@ -1,3 +1,4 @@
+
 # 📚 API Backend - Documentação
 
 ## Como rodar o backend
@@ -60,14 +61,28 @@ Preencha as seções de **Clientes**, **Pedidos** e **Serviços** conforme for i
     - [Listar Todos os Clientes](#listar-todos-os-clientes)
   - [Pedidos](#pedidos)
     - [Criar Pedido](#criar-pedido)
+    - [Atualizar Pedido](#atualizar-pedido)
+    - [Listar Todos os Pedidos](#listar-todos-os-pedidos)
+    - [Buscar Pedido por Código](#buscar-pedido-por-código)
+    - [Deletar Pedido](#deletar-pedido)
   - [Serviços](#serviços)
     - [Criar Serviço](#criar-serviço)
+    - [Listar Todos os Serviços](#listar-todos-os-serviços)
+    - [Buscar Serviço por Código](#buscar-serviço-por-código)
+    - [Atualizar Serviço](#atualizar-serviço)
+    - [Deletar Serviço](#deletar-serviço)
   - [Instaladores](#instaladores)
     - [Criar Instalador](#criar-instalador)
     - [Listar Todos os Instaladores](#listar-todos-os-instaladores)
     - [Buscar Instalador por CPF](#buscar-instalador-por-cpf)
     - [Atualizar Instalador](#atualizar-instalador)
     - [Deletar Instalador](#deletar-instalador)
+  - [Peças](#peças)
+    - [Criar Peça](#criar-peça)
+    - [Listar Todas as Peças](#listar-todas-as-peças)
+    - [Buscar Peça por Código](#buscar-peça-por-código)
+    - [Atualizar Peça](#atualizar-peça)
+    - [Deletar Peça](#deletar-peça)
   - [Autenticação](#autenticação)
   - [Erros Comuns](#erros-comuns)
 
@@ -330,24 +345,192 @@ Preencha as seções de **Clientes**, **Pedidos** e **Serviços** conforme for i
 
 ### Criar Pedido
 
-- **Endpoint:** `POST /pedidos/create`
+- **Endpoint:** `POST /pedido/create`
+- **Headers:**
+  ```
+  Authorization 
+  Bearer <seu_token_jwt>
+  Content-Type: application/json
+  ```
 - **Body (JSON):**
   ```json
   {
-    "clienteId": 1,
-    "descricao": "Pedido de exemplo"
-  }
-  ```
-- **Resposta de sucesso:**
-  ```json
-  {
-    "id": 1,
-    "clienteId": 1,
-    "descricao": "Pedido de exemplo"
+    "codcli": "12345678900",
+    "valped": 1500.00,
+    "dtped": "2024-07-01",
+    "enderped": {
+      "lgdr": "Rua Exemplo",
+      "numero": 100,
+      "complmt": "Apto 101",
+      "bairro": "Bairro Exemplo",
+      "cidade": "Cidade Exemplo",
+      "estado": "SP",
+      "cep": "01010-000"
+    },
+    "pecas": [
+      {
+        "id": 1,
+        "quantidade": 2
+      },
+      ...
+    ]
   }
   ```
 
+- **Resposta de sucesso:**
+  ```json
+  {
+    "codped": 1,
+    "codcli": "12345678900",
+    "valped": 1500.00,
+    "dtped": "2024-07-01",
+    "enderped": 1,
+    "pecas": [
+      {
+        "id": 1,
+        "quantidade": 2
+      },
+      ...
+    ]
+  }
+  ```
+- **Possíveis erros:**
+  - 401: Token ausente ou inválido.
+  - 400: Dados obrigatórios ausentes ou inválidos.
+  - 500: Erro ao inserir pedido.
+
+### Atualizar Pedido
+
+- **Endpoint:** `PUT /pedido/update/:codped`
+- **Headers:**
+- ```
+  Authorization Bearer <seu_token_jwt>
+  Content-Type: application/json
+  ```
+- **Body (JSON):**
+  Envie apenas os campos que deseja atualizar.
+
+  **Exemplo:**
+  ```json
+  {
+    "valped": 1600.00,
+    "dtped": "2024-07-02",
+    "enderped": {
+      "lgdr": "Rua Atualizada",
+      "numero": 200,
+      "complmt": "Casa",
+      "bairro": "Bairro Atualizado",
+      "cidade": "Cidade Atualizada",
+      "estado": "SP",
+      "cep": "02020-000"
+    },
+    "pecas": [
+      {
+        "id": 1,
+        "quantidade": 3
+      }
+    ]
+  }
+  ```
+
+- **Resposta de sucesso:**
+  ```json
+  {
+    "codped": 1,
+    "codcli": "12345678900",
+    "valped": 1600.00,
+    "dtped": "2024-07-02",
+    "enderped": 1,
+    "pecas": [
+      {
+        "id": 1,
+        "quantidade": 3
+      }
+    ]
+  }
+  ```
+- **Possíveis erros:**
+  - 401: Token ausente ou inválido.
+  - 400: Nenhum campo para atualizar.
+  - 404: Pedido não encontrado.
+  - 500: Erro ao atualizar pedido.
+
+### Listar Todos os Pedidos
+- **Endpoint:** `GET /pedido/getall`
+- **Headers:**
+  ```
+  Authorization Bearer <seu_token_jwt>
+  ```
+- **Resposta de sucesso:**
+  ```json
+  [
+    {
+      "codped": 10,
+      "cliente": "12345678900",
+      "statped": "orçamento",
+      "valped": "4",
+      "comp": "12",
+      "altura": "32",
+      "dtpdd": null,
+      "dtentg": null,
+      "enderped": "23"
+    },
+  ]
+  ```
+- **Possíveis erros:**
+  - 401: Token ausente ou inválido.
+  - 500: Erro ao buscar pedidos.
+  - 404: Nenhum pedido encontrado.
+ 
+
+### Buscar Pedido por Código
+
+- **Endpoint:** `GET /pedido/get/:codped`
+- **Headers:**
+  ```  
+  Authorization Bearer <seu_token_jwt>
+  ```
+- **Resposta de sucesso:**
+  ```json 
+  {
+    "codped": 1,
+    "codcli": "12345678900",
+    "valped": 1500.00,
+    "dtped": "2024-07-01",
+    "enderped": 1
+  }
+  ```
+- **Possíveis erros:**
+  - 401: Token ausente ou inválido.
+  - 404: Pedido não encontrado.
+  - 500: Erro ao buscar pedido.
+
+
+### Deletar Pedido
+
+- **Endpoint:** `DELETE /pedido/delete/:codped`
+- **Headers:**
+  ```
+  Authorization: Bearer <seu_token_jwt>
+  ``` 
+
+- **Resposta de sucesso:**
+  ```json
+  {
+    "codped": 1,
+    "codcli": "12345678900",
+    "valped": 1500.00,
+    "dtped": "2024-07-01",
+    "enderped": 1
+  }
+  ```
+- **Possíveis erros:**
+  - 401: Token ausente ou inválido.
+  - 404: Pedido não encontrado.
+  - 500: Erro ao deletar pedido.
+
 ---
+
 
 ## Serviços
 
@@ -649,6 +832,158 @@ Preencha as seções de **Clientes**, **Pedidos** e **Serviços** conforme for i
   - 401: Token ausente ou inválido.
   - 404: Instalador não encontrado.
   - 500: Erro ao deletar instalador.
+
+---
+
+## Peças
+
+### Criar Peça
+
+- **Endpoint:** `POST /pecas/create`
+- **Headers:**
+  ```
+  Authorization: Bearer <seu_token_jwt>
+  Content-Type: application/json
+  ```
+- **Body (JSON):**
+  ```json
+  {
+    "descricao": "Peça de Exemplo",
+    "valor": 100.00,
+    "tipo": "Elétrica",
+    "codigo": "PEC123456"
+  }
+  ```
+  - `descricao`: Descrição da peça (string, obrigatório)
+  - `valor`: Valor da peça (number, obrigatório)
+  - `tipo`: Tipo da peça (string, obrigatório)
+  - `codigo`: Código de identificação da peça (string, obrigatório)
+
+- **Resposta de sucesso:**
+  ```json
+  {
+    "id": 1,
+    "descricao": "Peça de Exemplo",
+    "valor": 100.00,
+    "tipo": "Elétrica",
+    "codigo": "PEC123456"
+  }
+  ```
+- **Possíveis erros:**
+  - 401: Token ausente ou inválido.
+  - 400: Dados obrigatórios ausentes ou inválidos.
+  - 500: Erro ao inserir peça.
+
+---
+
+### Listar Todas as Peças
+
+- **Endpoint:** `GET /pecas/getall`
+- **Headers:**
+  ```
+  Authorization: Bearer <seu_token_jwt>
+  ```
+- **Resposta de sucesso:**
+  ```json
+  [
+    {
+      "id": 1,
+      "descricao": "Peça de Exemplo",
+      "valor": 100.00,
+      "tipo": "Elétrica",
+      "codigo": "PEC123456"
+    },
+    ...
+  ]
+  ```
+- **Possíveis erros:**
+  - 401: Token ausente ou inválido.
+  - 500: Erro ao buscar peças.
+
+---
+
+### Buscar Peça por Código
+
+- **Endpoint:** `GET /pecas/get/:codigo`
+- **Headers:**
+  ```
+  Authorization: Bearer <seu_token_jwt>
+  ```
+- **Resposta de sucesso:**
+  ```json
+  {
+    "id": 1,
+    "descricao": "Peça de Exemplo",
+    "valor": 100.00,
+    "tipo": "Elétrica",
+    "codigo": "PEC123456"
+  }
+  ```
+- **Possíveis erros:**
+  - 401: Token ausente ou inválido.
+  - 404: Peça não encontrada.
+  - 500: Erro ao buscar peça.
+
+---
+
+### Atualizar Peça
+
+- **Endpoint:** `PUT /pecas/update/:codigo`
+- **Headers:**
+  ```
+  Authorization: Bearer <seu_token_jwt>
+  Content-Type: application/json
+  ```
+- **Body (JSON):**  
+  Envie apenas os campos que deseja atualizar.
+
+  **Exemplo:**
+  ```json
+  {
+    "valor": 120.00,
+    "tipo": "Hidráulica"
+  }
+  ```
+
+- **Resposta de sucesso:**
+  ```json
+  {
+    "id": 1,
+    "descricao": "Peça de Exemplo",
+    "valor": 120.00,
+    "tipo": "Hidráulica",
+    "codigo": "PEC123456"
+  }
+  ```
+- **Possíveis erros:**
+  - 401: Token ausente ou inválido.
+  - 400: Nenhum campo para atualizar.
+  - 404: Peça não encontrada.
+  - 500: Erro ao atualizar peça.
+
+---
+
+### Deletar Peça
+
+- **Endpoint:** `DELETE /pecas/delete/:codigo`
+- **Headers:**
+  ```
+  Authorization: Bearer <seu_token_jwt>
+  ```
+- **Resposta de sucesso:**
+  ```json
+  {
+    "id": 1,
+    "descricao": "Peça de Exemplo",
+    "valor": 100.00,
+    "tipo": "Elétrica",
+    "codigo": "PEC123456"
+  }
+  ```
+- **Possíveis erros:**
+  - 401: Token ausente ou inválido.
+  - 404: Peça não encontrada.
+  - 500: Erro ao deletar peça.
 
 ---
 

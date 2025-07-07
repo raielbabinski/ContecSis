@@ -45,8 +45,22 @@ const deleteAddress = async (enderCod) => {
   }
 };  
 
+const getAddressById = async (enderCod) => {
+  try {
+    const result = await db.query('SELECT * FROM endereco WHERE endercod = $1', [enderCod]);
+    if (result.length === 0) {
+      return { error: 'Endereço não encontrado.' };
+    }
+    return result[0];
+  } catch (error) {
+    console.error('Erro ao buscar endereço:', error.message);
+    throw error;
+  }
+};
+
 export default {
     deleteAddress,
     insertAddress,
-    updateAddress
+    updateAddress,
+    getAddressById
 };

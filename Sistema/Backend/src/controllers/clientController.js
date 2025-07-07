@@ -8,12 +8,14 @@ export const createClient = async (req, res) => {
       
     const newAddress = await addressModel.insertAddress(enderCli);
 
+    console.log('Endereço inserido:', newAddress);
+
     const newClient = await clientModel.insertClient({
       cpf,
       nome,
       fone,
       emai,
-      enderCli: newAddress.enderCod 
+      enderCli: newAddress.endercod 
     });
 
     res.status(201).json(newClient);
