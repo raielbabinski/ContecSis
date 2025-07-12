@@ -18,6 +18,8 @@ Sistema de Gestão de Clientes, Pedidos, Serviços, Instaladores, Peças e Usuá
   - [Frontend](#frontend)
   - [Backend](#backend)
     - [Como Rodar Backend](#como-rodar-backend)
+      - [Banco de Dados](#banco-de-dados)
+      - [Rodando o Servidor](#rodando-o-servidor)
     - [Documentação da API](#documentação-da-api)
 
 
@@ -47,42 +49,42 @@ O ContecSis é um sistema para gestão da empresa Contec do segmento de portões
 - passport
 
 ### Como Rodar Backend
-1. Clone o repositório:
-   ```bash
-   git clone https://github.com/seu-usuario/ContecSis.git
-   ```
-2. Instale as dependências do backend:
-   ```bash
-   cd Sistema/Backend
-   npm install
-   ```
-3. Configure o arquivo `.env` com as variáveis de ambiente:
-   ```env
-   DB_HOST=localhost
-   DB_PORT=5432
-   DB_NAME=contec_db
-   DB_USER=seu_usuario
-   DB_PASSWORD=sua_senha
-   JWT_SECRET=sua_chave_secreta
-   PORT=3000
-   ```
 
-4. Faça o insert das tabelas no seu banco de dados PostgreSQL conforme os scripts em `Sistema/Database/estrutura.sql`:
-    ```bash
-    psql -U seu_usuario -d seubanco -f estrutura.sql
-    ```
+#### Banco de Dados
 
-5. Popule o banco de dados com dados de exemplo usando `Sistema/Database/dados.sql`:
-   ```bash
-   psql -U seu_usuario -d seubanco -f dados.sql
-   ```
+1. Crie um banco de dados PostgreSQL.
 
-6. Inicie o servidor:
-   ```bash
-   npm start
-   ```
+2. Na pasta Database no arquivo `estrutura.sql`, localiza-se os comandos para a criação das tabelas no seu banco de dados PostgreSQL:
+   
+    [estrutura.sql](Sistema/Database/estrutura.sql)
 
-> Os scripts `estrutura.sql` e `dados.sql` estão em `Sistema/Database/` e já trazem toda a estrutura e dados de exemplo para testes e desenvolvimento.
+3. Popule o banco de dados executando o script de inserts no seu banco de dados PostgreSQL:
+  
+    [dados.sql](Sistema/Database/dados.sql)
+
+#### Rodando o Servidor
+
+1. Navegue até a pasta `Sistema/Backend` e instale as dependências:
+```bash
+cd Sistema/Backend
+```
+
+2. Instale o Yarn caso não tenha instalado na sua máquina:
+```bash
+npm install -g yarn
+```
+3. Instale as dependências do projeto:
+```bash
+yarn install
+```
+4. Entre na pasta src:
+```bash
+cd src
+```
+5. Inicie o servidor:
+```bash
+node server.js
+```
 
 
 ### Documentação da API

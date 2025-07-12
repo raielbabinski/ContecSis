@@ -1,43 +1,5 @@
 # 📚 API Backend - Documentação
 
-## Como rodar o backend
-
-1. **Instale as dependências:**
-   ```bash
-   npm install
-   ```
-
-2. **Configure o arquivo `.env` na raiz do projeto com as seguintes variáveis:**
-   ```
-   # Banco de dados
-   DB_HOST=localhost
-   DB_PORT=5432
-   DB_USER=seu_usuario
-   DB_PASSWORD=sua_senha
-   DB_DATABASE=nome_do_banco
-
-   # JWT e Passport
-   JWT_SECRET=sua_chave_jwt_super_secreta
-   PASSPORT_USERNAME_FIELD=username
-   PASSPORT_PASSWORD_FIELD=password
-   ```
-
-3. **Inicie o servidor:**
-   ```bash
-   npm start
-   ```
-   ou, para desenvolvimento com recarregamento automático:
-   ```bash
-   npm run dev
-   ```
-
-4. **A API estará disponível em:**  
-   ```
-   http://localhost:3012/
-   ```
-
----
-
 Este documento descreve as rotas disponíveis na API do Backend, seus métodos, parâmetros esperados e exemplos de resposta.  
 Preencha as seções de **Clientes**, **Pedidos** e **Serviços** conforme for implementando as rotas.
 
@@ -46,7 +8,6 @@ Preencha as seções de **Clientes**, **Pedidos** e **Serviços** conforme for i
 ## Índice
 
 - [📚 API Backend - Documentação](#-api-backend---documentação)
-  - [Como rodar o backend](#como-rodar-o-backend)
   - [Índice](#índice)
   - [Usuários](#usuários)
     - [Criar Usuário](#criar-usuário)
