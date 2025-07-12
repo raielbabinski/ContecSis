@@ -148,4 +148,5 @@ INSERT INTO servico (inst, valserv, tipserv, dtserv, codped) VALUES
 
 
 INSERT INTO usuario (nome, senha, email, telefone, cargo) VALUES
-('admin', 'admin', 'admin@admin.com', 000000, 'adm');
+('admin', '$2b$10$u7QOmJFkCoByMrGTJOimQet8354dMyOA0fCb4MDhjMRyMZnoGeGTy', 'admin@admin.com', 000000, 'adm');
+-- Senha "admin" criptografada.

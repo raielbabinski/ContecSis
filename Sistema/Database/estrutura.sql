@@ -66,6 +66,7 @@ CREATE TABLE usuario (
     email VARCHAR(50) NOT NULL UNIQUE,
     telefone BIGINT NOT NULL,
     cargo VARCHAR(30) NOT NULL
+    CONSTRAINT unique_u UNIQUE (nome, email) 
 );
 
 CREATE TABLE itempedido (

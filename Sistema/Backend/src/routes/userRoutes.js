@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post('/login', login);
 
-router.post('/create', createUser);
+router.post('/create', requireJWTAuth, blockInstalador, createUser);
 
 router.get('/getall', requireJWTAuth, blockInstalador, getAllUsers);
 

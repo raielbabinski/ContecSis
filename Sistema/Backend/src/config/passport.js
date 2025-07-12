@@ -22,6 +22,7 @@ passport.use(
                     [username],
                 );
 
+    
                 // se não encontrou, retorna erro
                 if (!user) {
                     return done(null, false, { message: "Usuário incorreto." });
