@@ -135,16 +135,16 @@ INSERT INTO pedido (cliente, statped, valped, comp, altura, dtpdd, dtentg, ender
 (10000000030, 'pedido', 2300, 166, 109, '2025-06-22', null, 35);
 
 INSERT INTO servico (inst, valserv, tipserv, dtserv, codped) VALUES
-(20000000001, 500, 'instalacao', '2025-05-03', 39),
-(20000000002, 600, 'instalacao', '2025-05-25', 43),
-(20000000003, 700, 'instalacao', '2025-07-12', 47),
-(20000000004, 800, 'instalacao', '2025-05-05', 51),
-(20000000001, 900,'instalacao', '2025-04-01', 55),
-(20000000002, 1000, 'instalacao', '2025-07-25', 59),
-(20000000003, 1100, 'instalacao', '2025-04-22', 33),
-(20000000001, 350, 'manutencao', '2025-06-10', 39),
-(20000000002, 400, 'manutencao', '2025-08-01', 43),
-(20000000003, 450, 'manutencao', '2025-08-15', 47);
+(20000000001, 500, 'instalacao', '2025-05-03', 18),
+(20000000002, 600, 'instalacao', '2025-05-25', 6),
+(20000000003, 700, 'instalacao', '2025-07-12', 21),
+(20000000004, 800, 'instalacao', '2025-05-05', 15),
+(20000000001, 900,'instalacao', '2025-04-01', 25),
+(20000000002, 1000, 'instalacao', '2025-07-25', 3),
+(20000000003, 1100, 'instalacao', '2025-04-22', 8),
+(20000000001, 350, 'manutencao', '2025-06-10', 9),
+(20000000002, 400, 'manutencao', '2025-08-01', 12),
+(20000000003, 450, 'manutencao', '2025-08-15', 29);
 
 
 INSERT INTO usuario (nome, senha, email, telefone, cargo) VALUES
