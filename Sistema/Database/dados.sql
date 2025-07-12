@@ -91,7 +91,7 @@ INSERT INTO cliente (cpf, nome, fone, email, endercli) VALUES
 (10000000027, 'Leandro Moreira', 11999990027, 'leandro27@email.com', 27),
 (10000000028, 'Sabrina Castro', 11999990028, 'sabrina28@email.com', 28),
 (10000000029, 'Felipe Ramos', 11999990029, 'felipe29@email.com', 29),
-(10000000030, 'Bianca Mendes', 11999990030, 'bianca30@email.com', 0);
+(10000000030, 'Bianca Mendes', 11999990030, 'bianca30@email.com', 30);
 
 
 INSERT INTO instalador (cpf, fone, email, nome, habilit) VALUES
@@ -127,7 +127,7 @@ INSERT INTO pedido (cliente, statped, valped, comp, altura, dtpdd, dtentg, ender
 (10000000022, 'pedido', 2250, 164, 108, '2025-04-15', null, 57),
 (10000000023, 'espera', 4200, 230, 150, '2025-05-05', '2025-05-15', 58),
 (10000000024, 'instalado', 870, 144, 99, '2025-07-15', '2025-07-25', 59),
-(10000000025, 'pedido', 1800, 176, 114, '2025-03-30', null, 30),
+(10000000025, 'pedido', 1800, 176, 114, '2025-03-30', null, 60),
 (10000000026, 'pedido', 2700, 190, 120, '2025-06-10', null, 31),
 (10000000027, 'espera', 3400, 220, 139, '2025-05-20', '2025-05-30', 32),
 (10000000028, 'instalado', 990, 160, 106, '2025-04-12', '2025-04-22', 33),
@@ -147,5 +147,5 @@ INSERT INTO servico (inst, valserv, tipserv, dtserv, codped) VALUES
 (20000000003, 450, 'manutencao', '2025-08-15', 47);
 
 
-INSERT INTO usuario (nome, senha, email, fone, cargo) VALUES
+INSERT INTO usuario (nome, senha, email, telefone, cargo) VALUES
 ('admin', 'admin', 'admin@admin.com', 000000, 'adm');
