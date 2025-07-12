@@ -18,7 +18,7 @@ passport.use(
             try {
                 // busca o usuário no banco de dados
                 const user = await db.oneOrNone(
-                    "SELECT nome, senha FROM usuario WHERE nome = $1;",
+                    "SELECT nome, senha, cargo FROM usuario WHERE nome = $1;",
                     [username],
                 );
 
@@ -59,7 +59,7 @@ passport.use(
         async (payload, done) => {
             try {
                 const user = await db.oneOrNone(
-                    "SELECT nome, senha FROM usuario WHERE nome = $1;",
+                    "SELECT nome, senha, cargo FROM usuario WHERE nome = $1;",
                     [payload.username],
                 );
 
@@ -89,6 +89,14 @@ passport.deserializeUser(function (user, cb) {
         return cb(null, user);
     });
 });
+
+// Middleware para bloquear acesso de instaladores a rotas restritas
+export function blockInstalador(req, res, next) {
+    if (req.user && req.user.cargo === 'instalador') {
+        return res.status(403).json({ message: 'Acesso restrito. Instaladores não podem acessar esta rota.' });
+    }
+    return next();
+}
 
 export const requireJWTAuth = passport.authenticate("jwt", { session: false });
 

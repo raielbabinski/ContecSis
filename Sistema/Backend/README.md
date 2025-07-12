@@ -1,4 +1,3 @@
-
 # 📚 API Backend - Documentação
 
 ## Como rodar o backend
@@ -53,6 +52,9 @@ Preencha as seções de **Clientes**, **Pedidos** e **Serviços** conforme for i
     - [Criar Usuário](#criar-usuário)
     - [Login](#login)
     - [Listar Todos os Usuários](#listar-todos-os-usuários)
+    - [Buscar Usuário por ID](#buscar-usuário-por-id)
+    - [Atualizar Usuário](#atualizar-usuário)
+    - [Deletar Usuário](#deletar-usuário)
   - [Clientes](#clientes)
     - [Criar Cliente](#criar-cliente)
     - [Buscar Cliente por CPF](#buscar-cliente-por-cpf)
@@ -87,6 +89,11 @@ Preencha as seções de **Clientes**, **Pedidos** e **Serviços** conforme for i
 ### Criar Usuário
 
 - **Endpoint:** `POST /users/create`
+- **Headers:**
+  ```
+  Authorization: Bearer <seu_token_jwt>
+  Content-Type: application/json
+  ```
 - **Body (JSON):**
   ```json
   {
@@ -102,14 +109,16 @@ Preencha as seções de **Clientes**, **Pedidos** e **Serviços** conforme for i
   {
     "codusuario": 1,
     "nome": "João da Silva",
-    "senha": "$2b$10$...",
     "email": "joao@email.com",
     "telefone": "11999999999",
     "cargo": "Administrador"
   }
   ```
+- **Permissão:** Apenas administradores podem criar novos usuários.
 - **Possíveis erros:**
   - 400: Usuário ou e-mail já cadastrado.
+  - 401: Token ausente ou inválido.
+  - 403: Permissão negada.
   - 500: Erro interno no servidor.
 
 ---
@@ -129,10 +138,13 @@ Preencha as seções de **Clientes**, **Pedidos** e **Serviços** conforme for i
   {
     "token": "jwt_token_aqui",
     "user": {
-      "nome": "João da Silva"
+      "codusuario": 1,
+      "nome": "João da Silva",
+      "cargo": "Administrador"
     }
   }
   ```
+- **Permissão:** Público (login).
 - **Possíveis erros:**
   - 401: Usuário incorreto.
   - 401: Senha incorreta.
@@ -143,6 +155,10 @@ Preencha as seções de **Clientes**, **Pedidos** e **Serviços** conforme for i
 ### Listar Todos os Usuários
 
 - **Endpoint:** `GET /users/getall`
+- **Headers:**
+  ```
+  Authorization: Bearer <seu_token_jwt>
+  ```
 - **Resposta de sucesso:**
   ```json
   [
@@ -156,8 +172,112 @@ Preencha as seções de **Clientes**, **Pedidos** e **Serviços** conforme for i
     ...
   ]
   ```
+- **Permissão:** Apenas administradores podem listar todos os usuários.
 - **Possíveis erros:**
+  - 401: Token ausente ou inválido.
+  - 403: Permissão negada.
   - 500: Erro ao buscar usuários.
+
+---
+
+### Buscar Usuário por ID
+
+- **Endpoint:** `GET /users/get/:codusuario`
+- **Headers:**
+  ```
+  Authorization: Bearer <seu_token_jwt>
+  ```
+- **Resposta de sucesso:**
+  ```json
+  {
+    "codusuario": 1,
+    "nome": "João da Silva",
+    "email": "joao@email.com",
+    "telefone": "11999999999",
+    "cargo": "Administrador"
+  }
+  ```
+- **Permissão:** Apenas administradores podem buscar usuários por ID.
+- **Possíveis erros:**
+  - 401: Token ausente ou inválido.
+  - 403: Permissão negada.
+  - 404: Usuário não encontrado.
+  - 500: Erro ao buscar usuário.
+
+---
+
+### Atualizar Usuário
+
+- **Endpoint:** `PUT /users/update/:codusuario`
+- **Headers:**
+  ```
+  Authorization: Bearer <seu_token_jwt>
+  Content-Type: application/json
+  ```
+- **Body (JSON):**
+  Envie apenas os campos que deseja atualizar.
+  
+  **Exemplo:**
+  ```json
+  {
+    "nome": "Novo Nome",
+    "email": "novo@email.com",
+    "telefone": "11988887777",
+    "cargo": "Instalador"
+  }
+  ```
+- **Resposta de sucesso:**
+  ```json
+  {
+    "codusuario": 1,
+    "nome": "Novo Nome",
+    "email": "novo@email.com",
+    "telefone": "11988887777",
+    "cargo": "Instalador"
+  }
+  ```
+- **Permissão:** Apenas administradores podem atualizar qualquer usuário. Usuários podem atualizar seus próprios dados (exceto cargo).
+- **Possíveis erros:**
+  - 401: Token ausente ou inválido.
+  - 403: Permissão negada.
+  - 400: Nenhum campo para atualizar.
+  - 404: Usuário não encontrado.
+  - 500: Erro ao atualizar usuário.
+
+---
+
+### Deletar Usuário
+
+- **Endpoint:** `DELETE /users/delete/:codusuario`
+- **Headers:**
+  ```
+  Authorization: Bearer <seu_token_jwt>
+  ```
+- **Resposta de sucesso:**
+  ```json
+  {
+    "codusuario": 1,
+    "nome": "João da Silva",
+    "email": "joao@email.com",
+    "telefone": "11999999999",
+    "cargo": "Administrador"
+  }
+  ```
+- **Permissão:** Apenas administradores podem deletar usuários.
+- **Possíveis erros:**
+  - 401: Token ausente ou inválido.
+  - 403: Permissão negada.
+  - 404: Usuário não encontrado.
+  - 500: Erro ao deletar usuário.
+
+---
+
+> **Observação:**
+> Após o login, utilize o token JWT retornado no header `Authorization` das requisições protegidas:
+> 
+> ```
+> Authorization: Bearer <token>
+> ```
 
 ---
 

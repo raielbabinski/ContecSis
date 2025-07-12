@@ -147,3 +147,5 @@ INSERT INTO servico (inst, valserv, tipserv, dtserv, codped) VALUES
 (20000000003, 450, 'manutencao', '2025-08-15', 47);
 
 
+INSERT INTO usuario (nome, senha, email, fone, cargo) VALUES
+('admin', 'admin', 'admin@admin.com', 000000, 'adm');

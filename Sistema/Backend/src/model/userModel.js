@@ -31,7 +31,50 @@ const insertUser = async (user) => {
   }
 };
 
+const getUserByName = async (id) => {
+  try {
+    const result = await db.oneOrNone('SELECT * FROM usuario WHERE nome = $1', [id]);
+    return result;
+  } catch (error) {
+    console.error('Erro ao buscar usuário por nome:', error.message);
+    throw error;
+  }
+}
+
+
+// Função que atualiza um usuário dinaminacamente
+const updateUser = async (id, updates) => {
+  try {
+    const fields = Object.keys(updates).map((key, index) => `${key} = $${index + 1}`).join(', ');
+    const values = Object.values(updates);
+    const query = `UPDATE usuario SET ${fields} WHERE codusuario = $${values.length + 1} RETURNING *`;
+    console.log('Query de atualização:', query);
+    const result  = await db.one(query, [...values, id]);
+    return result;
+  } catch (error) {
+    console.error('Erro ao atualizar usuário:', error.message);
+    throw error;
+  }
+};
+
+// Função que deleta um usuário
+const deleteUser = async (id) => {
+  try {
+    const result = await db.query('DELETE FROM usuario WHERE codusuario = $1 RETURNING *', [id]);
+    if (result.length === 0) {
+      return { error: 'Usuário não encontrado.' };
+    }
+    return result[0];
+  } catch (error) {
+    console.error('Erro ao deletar usuário:', error.message);
+    throw error;
+  }
+};  
+
 export default {
   usersAll,
-  insertUser
+  insertUser,
+  getUserByName,
+  updateUser,
+  deleteUser
 };

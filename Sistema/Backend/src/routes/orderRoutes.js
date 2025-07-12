@@ -16,6 +16,7 @@ router.delete('/delete/:codped', requireJWTAuth, deleteOrder);
 
 // Rota para buscar um pedido pelo código
 router.get('/get/:codped', requireJWTAuth, getOrderById);
+
 // Rota para atualizar um pedido
 router.put('/update/:codped', requireJWTAuth, updateOrder);
 export default router;

@@ -13,7 +13,6 @@ import userRoutes from './routes/userRoutes.js';
 import clientRoutes from './routes/clientRoutes.js';
 import installerRoutes from './routes/installerRoutes.js';
 import serviceRoutes from './routes/serviceRoutes.js';
-import partRoutes from './routes/partRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 
 const app = express();
@@ -31,7 +30,6 @@ app.use('/instalador', installerRoutes);
 
 app.use('/servico', serviceRoutes);
 
-app.use('/peca', partRoutes);
 
 app.use('/pedido', orderRoutes);
 

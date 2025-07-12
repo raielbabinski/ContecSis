@@ -25,4 +25,5 @@ db.connect()
 export default {
   query: (text, params) => db.any(text, params),
   oneOrNone: (text, params) => db.oneOrNone(text, params),
+  one: (text, params) => db.one(text, params),
 };
