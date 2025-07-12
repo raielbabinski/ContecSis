@@ -77,11 +77,23 @@ npm install -g yarn
 ```bash
 yarn install
 ```
-4. Entre na pasta src:
+4. Na pasta `Sistema/Backend`, crie um arquivo `.env` com as seguintes variáveis de ambiente:
+```env
+   DB_HOST=host_do_banco
+   DB_PORT=porta_do_banco
+   DB_NAME=seu_banco
+   DB_USER=seu_usuario
+   DB_PASSWORD=sua_senha
+   JWT_SECRET=sua_chave_secreta
+   PORT=sua_porta
+   ```
+Escreva as suas variaveis de ambiente conforme necessário.
+
+6. Entre na pasta src:
 ```bash
 cd src
 ```
-5. Inicie o servidor:
+7. Inicie o servidor:
 ```bash
 node server.js
 ```
